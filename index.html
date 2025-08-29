@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkedIn Post Formatter</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-purple-100 min-h-screen flex items-center justify-center p-6">
+  <div class="max-w-2xl w-full bg-white p-8 rounded-2xl shadow-2xl">
+    <h1 class="text-3xl font-extrabold mb-6 text-center text-gray-800">LinkedIn Post Formatter</h1>
+    
+    <textarea id="inputText" rows="6" 
+      class="w-full border border-gray-300 rounded-lg p-4 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent placeholder-gray-400" 
+      placeholder="Type your post here..."></textarea>
+
+    <div class="flex flex-wrap gap-3 justify-center mb-6">
+      <button onclick="applyFormat(boldMap)" 
+        class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg shadow-md transition">Bold</button>
+      <button onclick="applyFormat(italicMap)" 
+        class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg shadow-md transition">Italic</button>
+      <button onclick="applyBulletInline()" 
+        class="bg-purple-500 hover:bg-purple-600 text-white px-5 py-2 rounded-lg shadow-md transition">Bullet</button>
+      <button onclick="copyOutput()" 
+        class="bg-gray-700 hover:bg-gray-800 text-white px-5 py-2 rounded-lg shadow-md transition">Copy</button>
+    </div>
+
+    <h2 class="text-xl font-semibold mb-3 text-gray-700">Formatted Output:</h2>
+    <div id="outputText" 
+      class="w-full border border-gray-300 p-4 rounded-lg min-h-[150px] bg-gray-50 text-gray-800 whitespace-pre-wrap shadow-inner"></div>
+  </div>
+
+<script>
+const boldMap = {
+  a:'𝗮', b:'𝗯', c:'𝗰', d:'𝗱', e:'𝗲', f:'𝗳', g:'𝗴', h:'𝗵', i:'𝗶', j:'𝗷',
+  k:'𝗸', l:'𝗹', m:'𝗺', n:'𝗻', o:'𝗼', p:'𝗽', q:'𝗾', r:'𝗿', s:'𝘀', t:'𝘁',
+  u:'𝘂', v:'𝘃', w:'𝘄', x:'𝘅', y:'𝘆', z:'𝘇',
+  A:'𝗔', B:'𝗕', C:'𝗖', D:'𝗗', E:'𝗘', F:'𝗙', G:'𝗚', H:'𝗛', I:'𝗜', J:'𝗝',
+  K:'𝗞', L:'𝗟', M:'𝗠', N:'𝗡', O:'𝗢', P:'𝗣', Q:'𝗤', R:'𝗥', S:'𝗦', T:'𝗧',
+  U:'𝗨', V:'𝗩', W:'𝗪', X:'𝗫', Y:'𝗬', Z:'𝗭'
+};
+
+const italicMap = {
+  a:'𝘢', b:'𝘣', c:'𝘤', d:'𝘥', e:'𝘦', f:'𝘧', g:'𝘨', h:'𝘩', i:'𝘪', j:'𝘫',
+  k:'𝘬', l:'𝘭', m:'𝘮', n:'𝘯', o:'𝘰', p:'𝘱', q:'𝘲', r:'𝘳', s:'𝘴', t:'𝘵',
+  u:'𝘶', v:'𝘷', w:'𝘸', x:'𝘹', y:'𝘺', z:'𝘻',
+  A:'𝘈', B:'𝘉', C:'𝘊', D:'𝘋', E:'𝘌', F:'𝘍', G:'𝘎', H:'𝘏', I:'𝘐', J:'𝘑',
+  K:'𝘒', L:'𝘓', M:'𝘔', N:'𝘕', O:'𝘖', P:'𝘗', Q:'𝘘', R:'𝘙', S:'𝘚', T:'𝘛',
+  U:'𝘜', V:'𝘝', W:'𝘞', X:'𝘟', Y:'𝘠', Z:'𝘡'
+};
+
+function applyFormat(map) {
+  const textarea = document.getElementById('inputText');
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+
+  if(start === end) return;
+
+  const selectedText = textarea.value.slice(start, end);
+  let transformed = '';
+  for(let char of selectedText){
+    transformed += map[char] || char;
+  }
+
+  textarea.value = textarea.value.slice(0, start) + transformed + textarea.value.slice(end);
+  
+  // Restore selection
+  textarea.selectionStart = start;
+  textarea.selectionEnd = start + transformed.length;
+
+  updateOutput();
+}
+
+function applyBulletInline() {
+  const textarea = document.getElementById('inputText');
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const selectedText = textarea.value.slice(start, end);
+
+  const lines = selectedText.split('\n');
+  const bulleted = lines.map(line => line.trim() ? '   • ' + line : '').join('\n');
+
+  textarea.value = textarea.value.slice(0, start) + bulleted + textarea.value.slice(end);
+  
+  textarea.selectionStart = start;
+  textarea.selectionEnd = start + bulleted.length;
+
+  updateOutput();
+}
+
+function copyOutput() {
+  const output = document.getElementById('outputText');
+  navigator.clipboard.writeText(output.innerText);
+  alert('Copied to clipboard!');
+}
+
+function updateOutput() {
+  const textarea = document.getElementById('inputText');
+  document.getElementById('outputText').innerText = textarea.value;
+}
+
+document.getElementById('inputText').addEventListener('input', updateOutput);
+updateOutput();
+</script>
+</body>
+</html>
