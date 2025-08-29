@@ -1,106 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LinkedIn Post Formatter</title>
-<script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Useless tools</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-r from-blue-100 to-purple-100 min-h-screen flex items-center justify-center p-6">
+<body class="bg-gradient-to-r from-blue-100 to-purple-100 min-h-screen">
+<!-- Navbar -->
+<nav class="bg-white shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+          <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Parvej Useless tools
+          </span>
+      </div>
+      <div class="flex space-x-4">
+        <a href="./index.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition">Linkedin formatter</a>
+        <a href="#" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition">About</a>
+        <a href="#" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition">Contact</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="flex items-center justify-center p-6 mt-8">
   <div class="max-w-2xl w-full bg-white p-8 rounded-2xl shadow-2xl">
     <h1 class="text-3xl font-extrabold mb-6 text-center text-gray-800">LinkedIn Post Formatter</h1>
-    
-    <textarea id="inputText" rows="6" 
-      class="w-full border border-gray-300 rounded-lg p-4 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent placeholder-gray-400" 
-      placeholder="Type your post here..."></textarea>
+
+    <textarea id="inputText" rows="6"
+              class="w-full border border-gray-300 rounded-lg p-4 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent placeholder-gray-400"
+              placeholder="Type your post here..."></textarea>
 
     <div class="flex flex-wrap gap-3 justify-center mb-6">
-      <button onclick="applyFormat(boldMap)" 
-        class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg shadow-md transition">Bold</button>
-      <button onclick="applyFormat(italicMap)" 
-        class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg shadow-md transition">Italic</button>
-      <button onclick="applyBulletInline()" 
-        class="bg-purple-500 hover:bg-purple-600 text-white px-5 py-2 rounded-lg shadow-md transition">Bullet</button>
-      <button onclick="copyOutput()" 
-        class="bg-gray-700 hover:bg-gray-800 text-white px-5 py-2 rounded-lg shadow-md transition">Copy</button>
+      <button onclick="applyFormat(boldMap)"
+              class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg shadow-md transition">Bold</button>
+      <button onclick="applyFormat(italicMap)"
+              class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg shadow-md transition">Italic</button>
+      <button onclick="applyFormat(boldItalicMap)"
+              class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-lg shadow-md transition">BoldItalic</button>
+      <button onclick="applyFormat(negativeMap)"
+              class="bg-gray-900 hover:bg-black text-white px-5 py-2 rounded-lg shadow-md transition">🅽🅴🅶🅰🆃🅸🆅🅴</button>
+      <button onclick="applyFormat(squaredMap)"
+              class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-2 rounded-lg shadow-md transition">🅂🅀🅄🄰🅁🄴</button>
+      <button onclick="applyBulletInline()"
+              class="bg-purple-500 hover:bg-purple-600 text-white px-5 py-2 rounded-lg shadow-md transition">Bullet</button>
+      <button onclick="copyOutput()"
+              class="bg-gray-700 hover:bg-gray-800 text-white px-5 py-2 rounded-lg shadow-md transition">Copy</button>
     </div>
 
     <h2 class="text-xl font-semibold mb-3 text-gray-700">Formatted Output:</h2>
-    <div id="outputText" 
-      class="w-full border border-gray-300 p-4 rounded-lg min-h-[150px] bg-gray-50 text-gray-800 whitespace-pre-wrap shadow-inner"></div>
+    <div id="outputText"
+         class="w-full border border-gray-300 p-4 rounded-lg min-h-[150px] bg-gray-50 text-gray-800 whitespace-pre-wrap shadow-inner"></div>
   </div>
 
-<script>
-const boldMap = {
-  a:'𝗮', b:'𝗯', c:'𝗰', d:'𝗱', e:'𝗲', f:'𝗳', g:'𝗴', h:'𝗵', i:'𝗶', j:'𝗷',
-  k:'𝗸', l:'𝗹', m:'𝗺', n:'𝗻', o:'𝗼', p:'𝗽', q:'𝗾', r:'𝗿', s:'𝘀', t:'𝘁',
-  u:'𝘂', v:'𝘃', w:'𝘄', x:'𝘅', y:'𝘆', z:'𝘇',
-  A:'𝗔', B:'𝗕', C:'𝗖', D:'𝗗', E:'𝗘', F:'𝗙', G:'𝗚', H:'𝗛', I:'𝗜', J:'𝗝',
-  K:'𝗞', L:'𝗟', M:'𝗠', N:'𝗡', O:'𝗢', P:'𝗣', Q:'𝗤', R:'𝗥', S:'𝗦', T:'𝗧',
-  U:'𝗨', V:'𝗩', W:'𝗪', X:'𝗫', Y:'𝗬', Z:'𝗭'
-};
+  <script>
+    const boldMap = {
+      a:'𝗮', b:'𝗯', c:'𝗰', d:'𝗱', e:'𝗲', f:'𝗳', g:'𝗴', h:'𝗵', i:'𝗶', j:'𝗷',
+      k:'𝗸', l:'𝗹', m:'𝗺', n:'𝗻', o:'𝗼', p:'𝗽', q:'𝗾', r:'𝗿', s:'𝘀', t:'𝘁',
+      u:'𝘂', v:'𝘃', w:'𝘄', x:'𝘅', y:'𝘆', z:'𝘇',
+      A:'𝗔', B:'𝗕', C:'𝗖', D:'𝗗', E:'𝗘', F:'𝗙', G:'𝗚', H:'𝗛', I:'𝗜', J:'𝗝',
+      K:'𝗞', L:'𝗟', M:'𝗠', N:'𝗡', O:'𝗢', P:'𝗣', Q:'𝗤', R:'𝗥', S:'𝗦', T:'𝗧',
+      U:'𝗨', V:'𝗩', W:'𝗪', X:'𝗫', Y:'𝗬', Z:'𝗭'
+    };
 
-const italicMap = {
-  a:'𝘢', b:'𝘣', c:'𝘤', d:'𝘥', e:'𝘦', f:'𝘧', g:'𝘨', h:'𝘩', i:'𝘪', j:'𝘫',
-  k:'𝘬', l:'𝘭', m:'𝘮', n:'𝘯', o:'𝘰', p:'𝘱', q:'𝘲', r:'𝘳', s:'𝘴', t:'𝘵',
-  u:'𝘶', v:'𝘷', w:'𝘸', x:'𝘹', y:'𝘺', z:'𝘻',
-  A:'𝘈', B:'𝘉', C:'𝘊', D:'𝘋', E:'𝘌', F:'𝘍', G:'𝘎', H:'𝘏', I:'𝘐', J:'𝘑',
-  K:'𝘒', L:'𝘓', M:'𝘔', N:'𝘕', O:'𝘖', P:'𝘗', Q:'𝘘', R:'𝘙', S:'𝘚', T:'𝘛',
-  U:'𝘜', V:'𝘝', W:'𝘞', X:'𝘟', Y:'𝘠', Z:'𝘡'
-};
+    const italicMap = {
+      a:'𝘢', b:'𝘣', c:'𝘤', d:'𝘥', e:'𝘦', f:'𝘧', g:'𝘨', h:'𝘩', i:'𝘪', j:'𝘫',
+      k:'𝘬', l:'𝘭', m:'𝘮', n:'𝘯', o:'𝘰', p:'𝘱', q:'𝘲', r:'𝘳', s:'𝘴', t:'𝘵',
+      u:'𝘶', v:'𝘷', w:'𝘸', x:'𝘹', y:'𝘺', z:'𝘻',
+      A:'𝘈', B:'𝘉', C:'𝘊', D:'𝘋', E:'𝘌', F:'𝘍', G:'𝘎', H:'𝘏', I:'𝘐', J:'𝘑',
+      K:'𝘒', L:'𝘓', M:'𝘔', N:'𝘕', O:'𝘖', P:'𝘗', Q:'𝘘', R:'𝘙', S:'𝘚', T:'𝘛',
+      U:'𝘜', V:'𝘝', W:'𝘞', X:'𝘟', Y:'𝘠', Z:'𝘡'
+    };
 
-function applyFormat(map) {
-  const textarea = document.getElementById('inputText');
-  const start = textarea.selectionStart;
-  const end = textarea.selectionEnd;
+    const boldItalicMap = {
+      a:'𝙖', b:'𝙗', c:'𝙘', d:'𝙙', e:'𝙚', f:'𝙛', g:'𝙜', h:'𝙝', i:'𝙞', j:'𝙟',
+      k:'𝙠', l:'𝙡', m:'𝙢', n:'𝙣', o:'𝙤', p:'𝙥', q:'𝙦', r:'𝙧', s:'𝙨', t:'𝙩',
+      u:'𝙪', v:'𝙫', w:'𝙬', x:'𝙭', y:'𝙮', z:'𝙯',
+      A:'𝘼', B:'𝘽', C:'𝘾', D:'𝘿', E:'𝙀', F:'𝙁', G:'𝙂', H:'𝙃', I:'𝙄', J:'𝙅',
+      K:'𝙆', L:'𝙇', M:'𝙈', N:'𝙉', O:'𝙊', P:'𝙋', Q:'𝙌', R:'𝙍', S:'𝙎', T:'𝙏',
+      U:'𝙐', V:'𝙑', W:'𝙒', X:'𝙓', Y:'𝙔', Z:'𝙕'
+    };
 
-  if(start === end) return;
+    // Using full-width letters for connected background effect
+    const negativeMap = {
+      a:'🅰', b:'🅱', c:'🅲', d:'🅳', e:'🅴', f:'🅵', g:'🅶', h:'🅷', i:'🅸', j:'🅹',
+      k:'🅺', l:'🅻', m:'🅼', n:'🅽', o:'🅾', p:'🅿', q:'🆀', r:'🆁', s:'🆂', t:'🆃',
+      u:'🆄', v:'🆅', w:'🆆', x:'🆇', y:'🆈', z:'🆉',
+      A:'🅰', B:'🅱', C:'🅲', D:'🅳', E:'🅴', F:'🅵', G:'🅶', H:'🅷', I:'🅸', J:'🅹',
+      K:'🅺', L:'🅻', M:'🅼', N:'🅽', O:'🅾', P:'🅿', Q:'🆀', R:'🆁', S:'🆂', T:'🆃',
+      U:'🆄', V:'🆅', W:'🆆', X:'🆇', Y:'🆈', Z:'🆉',
+      ' ':' '
+    };
 
-  const selectedText = textarea.value.slice(start, end);
-  let transformed = '';
-  for(let char of selectedText){
-    transformed += map[char] || char;
-  }
+    // Using full-width characters with decorative surround
+    const squaredMap = {
+      a:'【a】', b:'【b】', c:'【c】', d:'【d】', e:'【e】', f:'【f】', g:'【g】', h:'【h】', i:'【i】', j:'【j】',
+      k:'【k】', l:'【l】', m:'【m】', n:'【n】', o:'【o】', p:'【p】', q:'【q】', r:'【r】', s:'【s】', t:'【t】',
+      u:'【u】', v:'【v】', w:'【w】', x:'【x】', y:'【y】', z:'【z】',
+      A:'【A】', B:'【B】', C:'【C】', D:'【D】', E:'【E】', F:'【F】', G:'【G】', H:'【H】', I:'【I】', J:'【J】',
+      K:'【K】', L:'【L】', M:'【M】', N:'【N】', O:'【O】', P:'【P】', Q:'【Q】', R:'【R】', S:'【S】', T:'【T】',
+      U:'【U】', V:'【V】', W:'【W】', X:'【X】', Y:'【Y】', Z:'【Z】',
+      ' ':'　'
+    };
 
-  textarea.value = textarea.value.slice(0, start) + transformed + textarea.value.slice(end);
-  
-  // Restore selection
-  textarea.selectionStart = start;
-  textarea.selectionEnd = start + transformed.length;
+    function applyFormat(map) {
+      const textarea = document.getElementById('inputText');
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
 
-  updateOutput();
-}
+      if(start === end) return;
 
-function applyBulletInline() {
-  const textarea = document.getElementById('inputText');
-  const start = textarea.selectionStart;
-  const end = textarea.selectionEnd;
-  const selectedText = textarea.value.slice(start, end);
+      const selectedText = textarea.value.slice(start, end);
+      let transformed = '';
+      for(let char of selectedText){
+        transformed += map[char] || char;
+      }
 
-  const lines = selectedText.split('\n');
-  const bulleted = lines.map(line => line.trim() ? '   • ' + line : '').join('\n');
+      textarea.value = textarea.value.slice(0, start) + transformed + textarea.value.slice(end);
 
-  textarea.value = textarea.value.slice(0, start) + bulleted + textarea.value.slice(end);
-  
-  textarea.selectionStart = start;
-  textarea.selectionEnd = start + bulleted.length;
+      // Restore selection
+      textarea.selectionStart = start;
+      textarea.selectionEnd = start + transformed.length;
 
-  updateOutput();
-}
+      updateOutput();
+    }
 
-function copyOutput() {
-  const output = document.getElementById('outputText');
-  navigator.clipboard.writeText(output.innerText);
-  alert('Copied to clipboard!');
-}
+    function applyBulletInline() {
+      const textarea = document.getElementById('inputText');
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const selectedText = textarea.value.slice(start, end);
 
-function updateOutput() {
-  const textarea = document.getElementById('inputText');
-  document.getElementById('outputText').innerText = textarea.value;
-}
+      const lines = selectedText.split('\n');
+      const bulleted = lines.map(line => line.trim() ? '   • ' + line : '').join('\n');
 
-document.getElementById('inputText').addEventListener('input', updateOutput);
-updateOutput();
-</script>
+      textarea.value = textarea.value.slice(0, start) + bulleted + textarea.value.slice(end);
+
+      textarea.selectionStart = start;
+      textarea.selectionEnd = start + bulleted.length;
+
+      updateOutput();
+    }
+
+    function copyOutput() {
+      const output = document.getElementById('outputText');
+      navigator.clipboard.writeText(output.innerText);
+      alert('Copied to clipboard!');
+    }
+
+    function updateOutput() {
+      const textarea = document.getElementById('inputText');
+      document.getElementById('outputText').innerText = textarea.value;
+    }
+
+    document.getElementById('inputText').addEventListener('input', updateOutput);
+    updateOutput();
+  </script>
 </body>
 </html>
